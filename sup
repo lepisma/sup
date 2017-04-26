@@ -73,6 +73,7 @@
         text '()]
     (if (> r 0.75)
       (print-and-die-maybe (music))
-      (if (> r 0.4)
-        (print-and-die-maybe (cricket))
-        (print-and-die-maybe (news))))))
+      (do (if (> r 0.4)
+            (print-and-die-maybe (cricket))
+            (print-and-die-maybe (news)))
+          (print-and-die-maybe (news))))))
