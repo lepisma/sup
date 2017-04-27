@@ -34,19 +34,19 @@
                 "royal challenger bangalore"
                 "rising pune supergiant"
                 "kolkata knight riders"
-                "gujrat lions"
+                "gujarat lions"
                 "delhi daredevils"
                 "kings xi punjab"
                 "mumbai indians"
                 "sunrisers hyderabad")
         criclive-lines (.splitlines (criclive))
         filtered (filter (fn [x]
-                                 (let [out False]
-                                   (for [team teams]
-                                     (if (in team (.lower x))
-                                       (do (setv out True)
-                                           (break))))
-                                   out)) criclive-lines)
+                           (let [out False]
+                             (for [team teams]
+                               (if (in team (.lower x))
+                                 (do (setv out True)
+                                     (break))))
+                             out)) criclive-lines)
         filtered-live (list (filter (fn [x]
                                       (not (in "[]" (.lower x))))
                                     filtered))]
@@ -57,23 +57,19 @@
 
 (defn clip [text]
   "Clip text to a limit"
-  (let [limit 60]
+  (let [limit 70]
     (if (> (len text) limit)
       (+ (cut text 0 limit) "...")
       text)))
 
-(defn print-and-die-maybe [text]
-  (if text
-    (do
-     (print (clip text))
-     (exit))))
+(defmacro follow-chain [conditions]
+  (if (not (empty? conditions))
+    `(let [text ~(car conditions)]
+       (if text (print (clip text))
+           (follow-chain ~(cdr conditions))))))
 
 (defmain [&rest args]
-  (let [r (random)
-        text '()]
-    (if (> r 0.75)
-      (print-and-die-maybe (music))
-      (do (if (> r 0.4)
-            (print-and-die-maybe (cricket))
-            (print-and-die-maybe (news)))
-          (print-and-die-maybe (news))))))
+  (let [r (random)]
+    (cond [(> r 0.75) (follow-chain ((music) (cricket) (news)))]
+          [(> r 0.4) (follow-chain ((cricket) (news)))]
+          [True (follow-chain ((news)))])))
