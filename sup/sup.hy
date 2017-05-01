@@ -1,7 +1,5 @@
 (import [random [random]])
-(import [cricket [sup-cricket]])
-(import [news [sup-news]])
-(import [music [sup-music]])
+(import [sup.modules [sup-cricket sup-news sup-music]])
 
 (defn clip [text]
   "Clip text to a limit"
