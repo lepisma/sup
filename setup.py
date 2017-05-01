@@ -14,7 +14,7 @@ setup(
     author_email="abhinav.tushar.vs@gmail.com",
     url=project_url,
     install_requires=["hy==0.12.1", "sh", "criclive", "haxor-news"],
-    scripts=["sup"],
+    entry_points={"console_scripts": ["sup=sup:sup.main"]},
     classifiers=(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Natural Language :: English", "Programming Language :: Python",
