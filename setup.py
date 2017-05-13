@@ -13,7 +13,7 @@ setup(
     author="Abhinav Tushar",
     author_email="abhinav.tushar.vs@gmail.com",
     url=project_url,
-    install_requires=["hy==0.12.1", "sh", "criclive", "haxor-news"],
+    install_requires=["hy==0.12.1", "sh", "criclive", "haxor-news", "psutil"],
     entry_points={"console_scripts": ["sup=sup:sup.main"]},
     classifiers=(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
