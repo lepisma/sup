@@ -4,7 +4,7 @@
 
 (defn clip [text]
   "Clip text to a limit"
-  (let [limit 70]
+  (let [limit 100]
     (if (> (len text) limit)
       (+ (cut text 0 limit) "...")
       text)))
