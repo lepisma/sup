@@ -1,5 +1,6 @@
 (import [random [randint]])
 (import [sh [criclive]])
+(import [sup.env [module-enabled?]])
 
 (setv *teams* '("india"
                 "australia"
@@ -20,19 +21,21 @@
 
 (defn sup-cricket []
   "Cricket scores"
-  (let [prefix "ℭ | "
-        criclive-lines (.splitlines (criclive))
-        filtered (filter (fn [x]
-                           (let [out False]
-                             (for [team *teams*]
-                               (if (in team (.lower x))
-                                 (do (setv out True)
-                                     (break))))
-                             out)) criclive-lines)
-        filtered-live (list (filter (fn [x]
-                                      (not (in "[]" (.lower x))))
-                                    filtered))]
-    (if (> (len filtered-live) 0)
-      (let [text (nth filtered-live (randint 0 (- (len filtered-live) 1)))]
-        (+ prefix (.join " " (cut (.split text ". ") 1))))
-      '())))
+  (if (module-enabled? "CRICKET")
+    (let [prefix "ℭ | "
+          criclive-lines (.splitlines (criclive))
+          filtered (filter (fn [x]
+                             (let [out False]
+                               (for [team *teams*]
+                                 (if (in team (.lower x))
+                                   (do (setv out True)
+                                       (break))))
+                               out)) criclive-lines)
+          filtered-live (list (filter (fn [x]
+                                        (not (in "[]" (.lower x))))
+                                      filtered))]
+      (if (> (len filtered-live) 0)
+        (let [text (nth filtered-live (randint 0 (- (len filtered-live) 1)))]
+          (+ prefix (.join " " (cut (.split text ". ") 1))))
+        '()))
+    '()))
